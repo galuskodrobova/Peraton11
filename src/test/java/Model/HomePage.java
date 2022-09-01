@@ -3,7 +3,11 @@ package Model;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.util.List;
 
 public class HomePage extends BasePage {
@@ -41,7 +45,10 @@ public class HomePage extends BasePage {
     @FindBy(name = "my-colors")
     private WebElement myColors;
 
-    @FindBy(className = "btn btn-outline-primary mt-3")
+    @FindBy(xpath = "//label[normalize-space()='Text input']")
+    private WebElement input;
+
+    @FindBy(xpath = "//button[@type='submit']")
     private WebElement submit;
 
 
@@ -49,29 +56,29 @@ public class HomePage extends BasePage {
         super(driver);
     }
 
-    public HomePage textInput(String text){
+    public HomePage textInput(String text) {
         textInput.sendKeys(text);
         return this;
     }
 
-    public HomePage passwordInput(String text){
+    public HomePage passwordInput(String text) {
         password.sendKeys(text);
         return this;
     }
 
-    public HomePage textAreaInput(String text){
+    public HomePage textAreaInput(String text) {
         myTextArea.sendKeys(text);
         return this;
     }
 
-    public HomePage drobDownSelect(String value){
+    public HomePage drobDownSelect(String value) {
         drobdownSelect.click();
         Select select = new Select(drobdownSelect);
         select.selectByValue(value);
         return this;
     }
 
-    public HomePage drobDownDataList(String city)  {
+    public HomePage drobDownDataList(String city) {
         drobdownDatalist.click();
         Actions action = new Actions(getDriver());
         action.moveToElement(getDriver()
@@ -85,24 +92,31 @@ public class HomePage extends BasePage {
         return this;
     }
 
-    public HomePage clickFile(){
+    public HomePage clickFile() {
         myFile.sendKeys("/usr/local/test/gibby.jpg");
         return this;
     }
 
-    public HomePage clickCheckBox1(){
+    public HomePage clickCheckBox1() {
         myCheckBox1.click();
         return this;
     }
 
-    public HomePage clickCheckBox2(){
+    public HomePage clickCheckBox2() {
         myCheckBox2.click();
         return this;
     }
 
-//    public HomePage clickColor(){
-//
-//    }
+    public String getTextInputName() {
+        return input.getText();
+    }
+
+    public SecondPage clickSubmit(){
+        submit.click();
+        return new SecondPage(getDriver());
+    }
+
+
 
 
 }

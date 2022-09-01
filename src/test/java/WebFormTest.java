@@ -1,29 +1,34 @@
 import Base.BaseTest;
 import Model.HomePage;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import Model.SecondPage;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.List;
-import java.util.ListIterator;
 
 public class WebFormTest extends BaseTest {
 
     @Test
-    public void testWebForm() throws InterruptedException {
+    public void testWebForm() {
 
-        HomePage newHomePage = new HomePage(getDriver())
+        SecondPage submittedForm = new HomePage(getDriver())
                 .textInput("Peraton")
                 .passwordInput("123455")
                 .textAreaInput("Hello world")
                 .drobDownSelect("1")
                 .clickFile()
                 .clickCheckBox1()
-                .clickCheckBox2();
+                .clickCheckBox2()
+                .clickSubmit();
 
-        Thread.sleep(10000);
-
-
-        }
-
+        Assert.assertEquals(submittedForm.getSubmitFormText(),"Form submitted");
     }
+
+    @Test
+    public void testIsTextInputVisible() {
+
+        String actual = new HomePage(getDriver()).getTextInputName();
+
+        Assert.assertEquals(actual,"Text input");
+    }
+}
+
